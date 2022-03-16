@@ -8,12 +8,13 @@ class CitySerializer(serializers.ModelSerializer):
         fields = ['id','name']
 
 class VehicleSerializer(serializers.ModelSerializer):
-    city = serializers.SerializerMethodField(read_only=True)
+    currentCity = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Vehicle
+        fields = '__all__'
 
-    def get_city(self, obj):
-        city = obj.city
-        serializer = CitySerializer(city, many=False)
+    def get_currentCity(self, obj):
+        currentCity = obj.currentCity
+        serializer = CitySerializer(currentCity, many=False)
         return serializer.data
