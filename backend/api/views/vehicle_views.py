@@ -4,43 +4,10 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from api.models import City, Vehicle
+from api.models import City, Vehicle, CityDistance
 from api.serializers import VehicleSerializer, CitySerializer
 
 from rest_framework import status
-
-
-""" @api_view(['GET'])
-def getProducts(request):
-    category = request.query_params.get('category')
-    query = request.query_params.get('keyword')
-    if query == None:
-        query = ''
-    if category != None:
-        products = get_list_or_404(Product.objects.filter(
-            category__id=category).order_by('-createdAt'))
-    else:
-        products = Product.objects.filter(
-            name__icontains=query).order_by('-createdAt')
-
-    page = request.query_params.get('page')
-    paginator = Paginator(products, 5)
-
-    try:
-        products = paginator.page(page)
-    except PageNotAnInteger:
-        products = paginator.page(1)
-    except EmptyPage:
-        products = paginator.page(paginator.num_pages)
-
-    if page == None:
-        page = 1
-
-    page = int(page)
-    print('Page:', page)
-    serializer = ProductSerializer(products, many=True)
-    return Response({'products': serializer.data, 'page': page, 'pages': paginator.num_pages}) """
-
 
 
 @api_view(['GET'])
@@ -60,7 +27,6 @@ def getVehicles(request):
         page = 1
 
     page = int(page)
-    print('Page:', page)
     serializer = VehicleSerializer(vehicles, many=True)
     return Response({'vehicles': serializer.data, 'page': page, 'pages': paginator.num_pages})
 
@@ -81,11 +47,16 @@ def getVehicleCatalog(request):
 @api_view(['POST'])
 def createVehicle(request):
     data = request.data
-    currentCity = City.objects.get(id=data['currentCity']['id'])
+    fuel_consumption = int(data.get("fuelConsumption", 0))
+    fuel_consumed = int(data.get("fuelConsumed", 0))
+    distance_traveled = int(data.get("distanceTraveled", 0))
+    current_city = City.objects.get(id=data['currentCity']['id'])
     vehicle = Vehicle.objects.create(
         vehicleId = data['vehicleId'],
-        currentCity = currentCity,
-        fuelConsumption = data['fuelConsumption'],
+        currentCity = current_city,
+        fuelConsumption = fuel_consumption,
+        fuelConsumed = fuel_consumed,
+        distanceTraveled = distance_traveled,
     )
 
     serializer = VehicleSerializer(vehicle, many=False)
@@ -95,17 +66,33 @@ def createVehicle(request):
 @api_view(['PUT'])
 def updateVehicle(request, pk):
     data = request.data
-    print(data)
     vehicle = Vehicle.objects.get(id=pk)
-    currentCity = City.objects.get(id=data['currentCity']['id'])
+    current_city = City.objects.get(id=data['currentCity']['id'])
     vehicle.vehicleId = data['vehicleId']
-    vehicle.fuelConsumption = data['fuelConsumption']
-    vehicle.currentCity = currentCity
+    vehicle.currentCity = current_city
+    vehicle.fuelConsumption = int(data.get("fuelConsumption", 0))
+    vehicle.fuelConsumed = int(data.get("fuelConsumed", 0))
+    vehicle.distanceTraveled = int(data.get("distanceTraveled", 0))
     vehicle.save()
 
     serializer = VehicleSerializer(vehicle, many=False)
     return Response(serializer.data)
 
+@api_view(['PUT'])
+def moveCityVehicle(request, pk):
+    data = request.data
+    vehicle = Vehicle.objects.get(id=pk)
+    current_city = City.objects.get(id=data['currentCity']['id'])
+    if current_city.id != vehicle.currentCity.id:
+        city_distance = CityDistance.objects.filter(cityFrom__id=vehicle.currentCity.id,cityTo__id=current_city.id).first()
+        print(city_distance)
+        vehicle.distanceTraveled = vehicle.distanceTraveled + city_distance.distance
+        vehicle.fuelConsumed = vehicle.fuelConsumed + (vehicle.fuelConsumption * city_distance.distance)
+        vehicle.currentCity = current_city
+        vehicle.save()
+
+    serializer = VehicleSerializer(vehicle, many=False)
+    return Response(serializer.data)
 
 @api_view(['DELETE'])
 def deleteVehicle(request, pk):

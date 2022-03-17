@@ -41,7 +41,7 @@ const VehicleForm = ({ uid, title, initialValues, cities, createVehicle, updateV
                 navigate(urlReturnSuccess)
             }
         }
-    }, [dispatch, navigate, successCreate, successUpdate, uid, urlReturnSuccess])
+    }, [dispatch, navigate, successCreate, successUpdate, urlReturnSuccess])
 
     const onSubmit = formValues => {
         if (uid) {
@@ -72,23 +72,35 @@ const VehicleForm = ({ uid, title, initialValues, cities, createVehicle, updateV
                     <Form onSubmit={handleSubmit}>
                         <Form.Row >
                             <Field name="vehicleId" sm={12} md={6} component={RenderInput}
-                                label={intl.formatMessage({ id: "vehicleEdit.nameLabel" })}
-                                placeholder={intl.formatMessage({ id: "vehicleEdit.namePlaceholder" })}
+                                label={intl.formatMessage({ id: "vehicleEdit.vehicleIdLabel" })}
+                                placeholder={intl.formatMessage({ id: "vehicleEdit.vehicleIdPlaceholder" })}
                             >
                             </Field>
 
                             <Field name="currentCity" sm={12} md={6} component={RenderSelect}
-                                label={intl.formatMessage({ id: "vehicleEdit.categoryLabel" })}
-                                placeholder={intl.formatMessage({ id: "vehicleEdit.categoryPlaceholder" })}
+                                label={intl.formatMessage({ id: "vehicleEdit.currentCityLabel" })}
+                                placeholder={intl.formatMessage({ id: "vehicleEdit.currentCityPlaceholder" })}
                                 options={cities} >
                             </Field>
 
                         </Form.Row>
 
                         <Form.Row >
-                            <Field name="fuelConsumption" sm={12} md={3} component={RenderInput}
-                                label={intl.formatMessage({ id: "vehicleEdit.priceLabel" })}
-                                placeholder={intl.formatMessage({ id: "vehicleEdit.pricePlaceholder" })}
+                            <Field name="fuelConsumption" sm={12} md={4} component={RenderInput}
+                                label={intl.formatMessage({ id: "vehicleEdit.fuelConsumptionLabel" })}
+                                placeholder={intl.formatMessage({ id: "vehicleEdit.fuelConsumptionPlaceholder" })}
+                                type="number"
+                            >
+                            </Field>
+                            <Field name="fuelConsumed" sm={12} md={4} component={RenderInput}
+                                label={intl.formatMessage({ id: "vehicleEdit.fuelConsumedLabel" })}
+                                placeholder={intl.formatMessage({ id: "vehicleEdit.fuelConsumedPlaceholder" })}
+                                type="number"
+                            >
+                            </Field>
+                            <Field name="distanceTraveled" sm={12} md={4} component={RenderInput}
+                                label={intl.formatMessage({ id: "vehicleEdit.distanceTraveledLabel" })}
+                                placeholder={intl.formatMessage({ id: "vehicleEdit.distanceTraveledPlaceholder" })}
                                 type="number"
                             >
                             </Field>

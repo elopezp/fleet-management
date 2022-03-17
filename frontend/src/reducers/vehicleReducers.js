@@ -21,6 +21,11 @@ import {
     VEHICLE_UPDATE_FAIL,
     VEHICLE_UPDATE_RESET,
 
+    VEHICLE_MOVE_CITY_REQUEST,
+    VEHICLE_MOVE_CITY_SUCCESS,
+    VEHICLE_MOVE_CITY_FAIL,
+    VEHICLE_MOVE_CITY_RESET,
+
 } from '../constants/vehicleConstants'
 
 
@@ -34,7 +39,7 @@ export const vehicleListReducer = (state = { vehicles: [] }, action) => {
                 loading: false,
                 vehicles: action.payload.vehicles,
                 page: action.payload.page,
-                pages: action.payload.pages
+                pages: action.payload.pages,
             }
 
         case VEHICLE_LIST_FAIL:
@@ -114,6 +119,25 @@ export const vehicleUpdateReducer = (state = { vehicle: {} }, action) => {
             return { loading: false, error: action.payload }
 
         case VEHICLE_UPDATE_RESET:
+            return { vehicle: {} }
+
+        default:
+            return state
+    }
+}
+
+export const vehicleMoveCityReducer = (state = { vehicle: {} }, action) => {
+    switch (action.type) {
+        case VEHICLE_MOVE_CITY_REQUEST:
+            return { loading: true }
+
+        case VEHICLE_MOVE_CITY_SUCCESS:
+            return { loading: false, success: true, vehicle: action.payload }
+
+        case VEHICLE_MOVE_CITY_FAIL:
+            return { loading: false, error: action.payload }
+
+        case VEHICLE_MOVE_CITY_RESET:
             return { vehicle: {} }
 
         default:

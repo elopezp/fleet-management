@@ -20,6 +20,10 @@ import {
     VEHICLE_UPDATE_SUCCESS,
     VEHICLE_UPDATE_FAIL,
 
+    VEHICLE_MOVE_CITY_REQUEST,
+    VEHICLE_MOVE_CITY_SUCCESS,
+    VEHICLE_MOVE_CITY_FAIL,
+
 } from '../constants/vehicleConstants'
 
 
@@ -86,7 +90,7 @@ export const vehicleCatalogDetails = () => async (dispatch) => {
     }
 }
 
-export const deleteVehicle = (id) => async (dispatch, getState) => {
+export const deleteVehicle = (id) => async (dispatch) => {
     try {
         dispatch({
             type: VEHICLE_DELETE_REQUEST
@@ -141,7 +145,7 @@ export const createVehicle = (vehicle) => async (dispatch) => {
 }
 
 
-export const updateVehicle = (vehicle) => async (dispatch, getState) => {
+export const updateVehicle = (vehicle) => async (dispatch) => {
     try {
         dispatch({
             type: VEHICLE_UPDATE_REQUEST
@@ -161,6 +165,34 @@ export const updateVehicle = (vehicle) => async (dispatch, getState) => {
     } catch (error) {
         dispatch({
             type: VEHICLE_UPDATE_FAIL,
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail
+                : error.message,
+        })
+    }
+}
+
+
+export const moveCityVehicle = (vehicle) => async (dispatch) => {
+    try {
+        dispatch({
+            type: VEHICLE_MOVE_CITY_REQUEST
+        })
+
+        const { data } = await axios.put(
+            `/api/vehicles/moveCity/${vehicle.id}/`,
+            vehicle
+        )
+        dispatch({
+            type: VEHICLE_MOVE_CITY_SUCCESS,
+            payload: data,
+        })
+
+
+
+    } catch (error) {
+        dispatch({
+            type: VEHICLE_MOVE_CITY_FAIL,
             payload: error.response && error.response.data.detail
                 ? error.response.data.detail
                 : error.message,

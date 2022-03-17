@@ -14,20 +14,6 @@ function Header() {
                     <LinkContainer to='/' className="mx-auto pr-2">
                         <Navbar.Brand ><FormattedMessage id="component.header.brand" /></Navbar.Brand>
                     </LinkContainer>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" className="order-first" />
-                    <Navbar.Collapse id="basic-navbar-nav" className="flex-shrink-1 flex-grow-0 order-lg-1 order-last">
-                        <Nav activeKey={window.location.pathname}>
-
-                            <NavDropdown title={intl.formatMessage({ id: "component.header.admin" })} id='adminmenu'>
-
-                                <LinkContainer to='/productlist'>
-                                    <NavDropdown.Item><FormattedMessage id="component.header.products" /></NavDropdown.Item>
-                                </LinkContainer>
-
-                            </NavDropdown>
-
-                        </Nav>
-                    </Navbar.Collapse>
                 </Container>
             </Navbar>
 

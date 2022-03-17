@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
-import { Link, useParams, useLocation,useNavigate } from "react-router-dom"
-import { connect, useSelector } from "react-redux"
+import { Link, useParams, useLocation } from "react-router-dom"
+import { connect } from "react-redux"
 import { FormattedMessage, useIntl } from "react-intl"
 import Loader from '../components/Loader'
 import Message from '../components/Message'
@@ -9,7 +9,6 @@ import VehicleForm from "../components/vehicle/VehicleForm"
 
 const VehicleEditScreen = ({ vehicleDetails, listVehicleDetails, vehicleCatalogDetails }) => {
 
-  const navigate = useNavigate();
   const { id } = useParams();
 
   const { error, loading, vehicle, cities } = vehicleDetails
@@ -22,10 +21,11 @@ const VehicleEditScreen = ({ vehicleDetails, listVehicleDetails, vehicleCatalogD
     vehicleId: vehicle?.vehicleId,
     fuelConsumption: vehicle?.fuelConsumption,
     currentCity: vehicle?.currentCity,
+    fuelConsumed: vehicle?.fuelConsumed,
+    distanceTraveled: vehicle?.distanceTraveled,
   }
 
   useEffect(() => {
-
       if (id) {
         listVehicleDetails(id, true)
       }
@@ -33,7 +33,7 @@ const VehicleEditScreen = ({ vehicleDetails, listVehicleDetails, vehicleCatalogD
         vehicleCatalogDetails()
       }
 
-  }, [navigate, listVehicleDetails, vehicleCatalogDetails, id])
+  }, [listVehicleDetails, vehicleCatalogDetails, id])
   
   return (
     <div>
