@@ -57,7 +57,7 @@ export const validateFormVehicleMoveCity = formValues => {
   const errors = {};
 
   if ((!formValues.currentCity)) {
-    errors.currentCity = 'vehicleEdit.currentCityNotEmpty';
+    errors.currentCity = 'vehicleEdit.cityNotEmpty';
   }
   return errors;
 };

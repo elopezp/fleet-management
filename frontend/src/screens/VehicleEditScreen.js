@@ -45,6 +45,7 @@ const VehicleEditScreen = ({ vehicleDetails, listVehicleDetails, vehicleCatalogD
         <Link to={backUrl}>
           <FormattedMessage id="vehicleEdit.goBack" />
         </Link>
+        <hr></hr>
         <VehicleForm title={intl.formatMessage({ id: "vehicleEdit.editTitle" })}
           initialValues={initialValues} uid={id}
           cities={cities}  urlReturnSuccess={backUrl}>
@@ -54,6 +55,7 @@ const VehicleEditScreen = ({ vehicleDetails, listVehicleDetails, vehicleCatalogD
         <Link to={backUrl}>
           <FormattedMessage id="vehicleEdit.goBack" />
         </Link>
+        <hr></hr>
         <VehicleForm title={intl.formatMessage({ id: "vehicleEdit.addTitle" })}
           urlReturnSuccess="/vehiclelist" cities={cities}>
         </VehicleForm>

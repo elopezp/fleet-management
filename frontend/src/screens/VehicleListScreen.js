@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Link, useLocation,useNavigate } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { Table, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useIntl, FormattedMessage } from "react-intl"
@@ -15,7 +15,7 @@ import { listVehicles, deleteVehicle } from '../actions/vehicleActions'
 function VehicleListScreen() {
 
     const [moveVehicleModalShow, setMoveVehicleModalShow] = useState(false)
-    const [selectedVehicleId, setSelectedVehicleId] = useState(null)
+    const [selectedVehicle, setSelectedVehicle] = useState(null)
 
     const dispatch = useDispatch()
     const intl = useIntl()
@@ -38,12 +38,11 @@ function VehicleListScreen() {
         }
         else{
             if (!success) {
-                console.log("useEffect listVehicles " + vehicles.length)
                 dispatch(listVehicles(search))
             }
         }
   
-    }, [dispatch, search, success, successDelete,vehicleMoveCityUpdated])
+    }, [dispatch,search,success,successDelete,vehicleMoveCityUpdated])
 
 
     const deleteHandler = (id) => {
@@ -55,8 +54,8 @@ function VehicleListScreen() {
         }
     }
 
-    const moveVehicleHandler = (id) => {
-        setSelectedVehicleId(id)
+    const moveVehicleHandler = (vehicle) => {
+        setSelectedVehicle(vehicle)
         setMoveVehicleModalShow(true)
     }
 
@@ -65,8 +64,8 @@ function VehicleListScreen() {
             <CenteredModal
                 show={moveVehicleModalShow}
                 onHide={() => setMoveVehicleModalShow(false)}
-                header={intl.formatMessage({ id: "vehicleList.moveVehicleHeader" })}>
-                <MoveCityVehicleForm uid={selectedVehicleId}> </MoveCityVehicleForm>
+                header={intl.formatMessage({ id: "vehicleList.moveVehicleHeader" }, { currentCity: selectedVehicle?.currentCity.name, vehicleId: selectedVehicle?.vehicleId })}>
+                <MoveCityVehicleForm entity={selectedVehicle}> </MoveCityVehicleForm>
             </CenteredModal>
             <Row className='align-items-center'>
                 <Col>
@@ -108,8 +107,7 @@ function VehicleListScreen() {
                                 <tbody>
                                     {vehicles.map(vehicle => (
                                         <tr key={vehicle.id}>
-                                            <td><Button variant='light' size="sm" onClick={() => moveVehicleHandler(vehicle.id)}>
-                                                    <FontAwesomeIcon icon={['fa', 'plus']} />
+                                            <td><Button variant="light" size="sm" onClick={() => moveVehicleHandler(vehicle)}>
                                                     <FormattedMessage id="vehicleList.moveVehicle" />
                                                 </Button></td>
                                             <td>{vehicle.vehicleId}</td>

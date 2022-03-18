@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Pagination } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 
@@ -7,7 +7,7 @@ function Paginate({ pages, page, keyword = '', extra_param = '' }) {
 
     const location = useLocation();
     const search = location.search;
-    const navigate = useNavigate();
+
     if (keyword) {
         keyword = new URLSearchParams(search).get('keyword');
     }

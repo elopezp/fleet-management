@@ -1,11 +1,9 @@
 import React from 'react'
-import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
+import { Navbar, Container } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
-import { FormattedMessage, useIntl } from "react-intl"
+import { FormattedMessage } from "react-intl"
 
 function Header() {
-
-    const intl = useIntl()
 
     return (
         <header>

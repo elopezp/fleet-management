@@ -1,0 +1,77 @@
+[
+    {
+        "model": "api.city",
+        "pk": 1,
+        "fields": {
+            "name": "Ciudad A"
+        }
+    },
+    {
+        "model": "api.city",
+        "pk": 2,
+        "fields": {
+            "name": "Ciudad B"
+        }
+    },
+    {
+        "model": "api.city",
+        "pk": 3,
+        "fields": {
+            "name": "Ciudad C"
+        }
+    },
+    {
+        "model": "api.cityDistance",
+        "pk": 1,
+        "fields": {
+            "cityFrom": 1,
+            "cityTo": 2,
+            "distance": 1
+        }
+    },
+    {
+        "model": "api.cityDistance",
+        "pk": 2,
+        "fields": {
+            "cityFrom": 1,
+            "cityTo": 3,
+            "distance": 2
+        }
+    },
+    {
+        "model": "api.cityDistance",
+        "pk": 3,
+        "fields": {
+            "cityFrom": 2,
+            "cityTo": 1,
+            "distance": 1
+        }
+    },
+    {
+        "model": "api.cityDistance",
+        "pk": 4,
+        "fields": {
+            "cityFrom": 2,
+            "cityTo": 3,
+            "distance": 4
+        }
+    },
+    {
+        "model": "api.cityDistance",
+        "pk": 5,
+        "fields": {
+            "cityFrom": 3,
+            "cityTo": 1,
+            "distance": 2
+        }
+    },
+    {
+        "model": "api.cityDistance",
+        "pk": 6,
+        "fields": {
+            "cityFrom": 3,
+            "cityTo": 2,
+            "distance": 4
+        }
+    }
+]

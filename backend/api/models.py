@@ -5,7 +5,7 @@ from django.db import models
 class City(models.Model):
     name = models.CharField(max_length = 100, unique=True)
     id = models.AutoField(primary_key=True, editable=False)
-
+    
     def __str__(self):
         return self.name
 
@@ -26,6 +26,7 @@ class Vehicle(models.Model):
     fuelConsumption = models.IntegerField(null=False, blank=True)
     fuelConsumed = models.IntegerField(null=True, blank=True, default=0)
     distanceTraveled = models.IntegerField(null=True, blank=True, default=0)
+    createdAt = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.vehicleId

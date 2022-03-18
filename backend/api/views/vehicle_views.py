@@ -1,18 +1,14 @@
-from django.shortcuts import get_list_or_404,render
-
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from api.models import City, Vehicle, CityDistance
 from api.serializers import VehicleSerializer, CitySerializer
 
-from rest_framework import status
 
 
 @api_view(['GET'])
 def getVehicles(request):
-    vehicles = Vehicle.objects.all()
+    vehicles = Vehicle.objects.order_by('-createdAt')
     page = request.query_params.get('page')
     paginator = Paginator(vehicles, 5)
 
@@ -85,7 +81,6 @@ def moveCityVehicle(request, pk):
     current_city = City.objects.get(id=data['currentCity']['id'])
     if current_city.id != vehicle.currentCity.id:
         city_distance = CityDistance.objects.filter(cityFrom__id=vehicle.currentCity.id,cityTo__id=current_city.id).first()
-        print(city_distance)
         vehicle.distanceTraveled = vehicle.distanceTraveled + city_distance.distance
         vehicle.fuelConsumed = vehicle.fuelConsumed + (vehicle.fuelConsumption * city_distance.distance)
         vehicle.currentCity = current_city

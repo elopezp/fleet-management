@@ -1,0 +1,72 @@
+[
+    {
+        "model": "api.vehicle",
+        "pk": 1,
+        "fields": {
+            "vehicleId": "Mazda 3",
+            "currentCity": 1,
+            "fuelConsumption": 10,
+            "createdAt": "2022-03-17T12:00:01.000Z"
+        }
+    },
+    {
+        "model": "api.vehicle",
+        "pk": 2,
+        "fields": {
+            "vehicleId": "Kia Soul",
+            "currentCity": 2,
+            "fuelConsumption": 8,
+            "createdAt": "2022-03-17T12:00:02.000Z"
+        }
+    },
+    {
+        "model": "api.vehicle",
+        "pk": 3,
+        "fields": {
+            "vehicleId": "Tsuru",
+            "currentCity": 1,
+            "fuelConsumption": 5,
+            "createdAt": "2022-03-17T12:00:03.000Z"
+        }
+    },
+    {
+        "model": "api.vehicle",
+        "pk": 4,
+        "fields": {
+            "vehicleId": "Vento",
+            "currentCity": 3,
+            "fuelConsumption": 9,
+            "createdAt": "2022-03-17T12:00:04.000Z"
+        }
+    },
+    {
+        "model": "api.vehicle",
+        "pk": 5,
+        "fields": {
+            "vehicleId": "Mustang",
+            "currentCity": 1,
+            "fuelConsumption": 15,
+            "createdAt": "2022-03-17T12:00:05.000Z"
+        }
+    },
+    {
+        "model": "api.vehicle",
+        "pk": 6,
+        "fields": {
+            "vehicleId": "Cavalier",
+            "currentCity": 1,
+            "fuelConsumption": 12,
+            "createdAt": "2022-03-17T12:00:06.000Z"
+        }
+    },
+    {
+        "model": "api.vehicle",
+        "pk": 7,
+        "fields": {
+            "vehicleId": "Versa",
+            "currentCity": 1,
+            "fuelConsumption": 7,
+            "createdAt": "2022-03-17T12:00:07.000Z"
+        }
+    }
+]

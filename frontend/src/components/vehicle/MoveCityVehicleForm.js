@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { useNavigate } from "react-router-dom"
 import { Form as FinalForm, Field } from 'react-final-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, Button } from 'react-bootstrap'
@@ -14,9 +13,8 @@ import { RenderSelect } from '../RenderField'
 
 
 
-const MoveCityVehicleForm = ({ uid, title, vehicleDetails, listVehicleDetails, moveCityVehicle, urlReturnSuccess }) => {
+const MoveCityVehicleForm = ({ entity, title, vehicleDetails, listVehicleDetails, moveCityVehicle }) => {
 
-    const navigate = useNavigate()
     const intl = useIntl()
     const dispatch = useDispatch()
 
@@ -33,21 +31,22 @@ const MoveCityVehicleForm = ({ uid, title, vehicleDetails, listVehicleDetails, m
         distanceTraveled: vehicle?.distanceTraveled,
     }
 
-    useEffect(() => { 
+    useEffect(() => {
         if (successUpdate) {
             dispatch({ type: VEHICLE_MOVE_CITY_RESET })
-            if (urlReturnSuccess) {
-                navigate(urlReturnSuccess)
+        }
+        else {
+            if((vehicle && vehicle.id !== entity.id) || 
+            (vehicle && vehicle.id === entity.id && vehicle.currentCity.id !== entity.currentCity.id))
+            {
+                listVehicleDetails(entity.id)
             }
         }
-        else{
-                listVehicleDetails(uid)
-        }
-    }, [successUpdate])
+    }, [dispatch,listVehicleDetails,successUpdate,entity,vehicle])
 
     const onSubmit = formValues => {
-        if (uid) {
-            formValues.id = uid
+        if (entity) {
+            formValues.id = entity.id
             moveCityVehicle(formValues);
         }
     };
@@ -55,6 +54,8 @@ const MoveCityVehicleForm = ({ uid, title, vehicleDetails, listVehicleDetails, m
     return (
         <div >
             {title && <h2>{title}</h2>}
+            {loading && <Loader />}
+            {error && <Message variant='danger'>{errorUpdate}</Message>}
             {loadingUpdate && <Loader />}
             {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
             <FinalForm
@@ -64,12 +65,11 @@ const MoveCityVehicleForm = ({ uid, title, vehicleDetails, listVehicleDetails, m
             >
                 {({ handleSubmit }) => (
                     <Form onSubmit={handleSubmit}>
-                        <h5>{initialValues.vehicleId}</h5>
-                        <hr></hr>
+
                         <Form.Row >
                             <Field name="currentCity" sm={12} md={6} component={RenderSelect}
-                                label={intl.formatMessage({ id: "vehicleEdit.currentCityLabel" })}
-                                placeholder={intl.formatMessage({ id: "vehicleEdit.currentCityPlaceholder" })}
+                                label={intl.formatMessage({ id: "vehicleEdit.cityLabel" })}
+                                placeholder={intl.formatMessage({ id: "vehicleEdit.cityPlaceholder" })}
                                 options={cities} >
                             </Field>
                         </Form.Row>
