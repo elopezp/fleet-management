@@ -31,7 +31,7 @@ Al dar la instrucción de que un vehículo viaje a una ciudad se debe de actuali
 ## Instrucciones de descarga e instalación
 
 * 1 - Abrir una terminal y clonar proyecto: `git clone https://github.com/elopezp/fleet-management.git`
-* 2 - Ir al directorio de backend: `cd backend`
+* 2 - Ir al directorio de backend: `cd fleet-management/backend`
 * 3 - Crear virtual environment:
 _Linux y macOS_:
 `python3 -m venv myenv`
@@ -45,7 +45,7 @@ _Windows_:
 * 5 - Instalar paquetes necesarios con pip: `pip install -r requirements.txt`
 * 6 - Crear esquema de base de datos: `python manage.py makemigrations && python manage.py migrate`
 * 7 - Crear datos de inicio para las ciudades y la distancia entre ellas: `python manage.py loaddata initialdata.json`
-Crear vehículos (opcional)
+*** Crear vehículos (opcional):
 `python manage.py loaddata vehicles.json`
 * 8 - Ejecutar servidor de desarrollo django: `python manage.py runserver`
 * 9 - En otra terminal ir al directorio de frontend: `cd ../frontend`
